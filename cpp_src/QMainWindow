@@ -1,0 +1,4 @@
+#ifndef QMAINWINDOW_H
+#define QMAINWINDOW_H
+#include "qstring.h"
+#endif

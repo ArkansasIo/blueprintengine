@@ -1,0 +1,5 @@
+#ifndef QGROUPBOX_H
+#define QGROUPBOX_H
+#include "qstring.h"
+class QGroupBox : public QWidget { };
+#endif

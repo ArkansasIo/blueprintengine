@@ -1,8 +1,8 @@
 #ifndef WOLFMAN_AI_H
 #define WOLFMAN_AI_H
 
-#include <QString>
-#include <QVector>
+#include "qstring.h"
+#include "qvector.h"
 #include "Physics.h"
 
 namespace WolfManAlpha {

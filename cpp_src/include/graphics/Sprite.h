@@ -2,7 +2,7 @@
 #define SPRITE_H
 
 #include "../core/GameObject.h"
-#include <QString>
+#include "qstring.h"
 
 namespace LunaLite {
 namespace Graphics {

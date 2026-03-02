@@ -1,8 +1,8 @@
 #ifndef GAME_ACTION_H
 #define GAME_ACTION_H
 
-#include <QString>
-#include <QList>
+#include "qstring.h"
+#include "qstring.h"
 
 class Game_Action {
 public:

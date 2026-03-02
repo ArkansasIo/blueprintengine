@@ -1,11 +1,11 @@
 #ifndef LUNALITE_JSON_UTILS_H
 #define LUNALITE_JSON_UTILS_H
 
-#include <QString>
-#include <QJsonDocument>
-#include <QJsonObject>
-#include <QJsonArray>
-#include <QJsonValue>
+#include "qstring.h"
+#include "qstring.h"
+#include "qstring.h"
+#include "qstring.h"
+#include "qstring.h"
 
 namespace LunaLite {
 namespace Serialization {

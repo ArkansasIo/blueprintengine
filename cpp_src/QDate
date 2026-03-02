@@ -1,0 +1,4 @@
+#ifndef QDATE_H
+#define QDATE_H
+class QDate { };
+#endif

@@ -1,9 +1,9 @@
 #ifndef WOLFMAN_RENDERER_H
 #define WOLFMAN_RENDERER_H
 
-#include <QString>
-#include <QVector>
-#include <QColor>
+#include "qstring.h"
+#include "qvector.h"
+#include "qcolor.h"
 
 namespace WolfManAlpha {
 

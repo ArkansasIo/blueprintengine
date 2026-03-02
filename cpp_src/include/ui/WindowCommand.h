@@ -2,8 +2,8 @@
 #define WINDOW_COMMAND_H
 
 #include "WindowBase.h"
-#include <QVector>
-#include <QString>
+#include "qvector.h"
+#include "qstring.h"
 
 namespace LunaLite {
 namespace UI {

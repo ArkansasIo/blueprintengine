@@ -1,8 +1,7 @@
 #ifndef WOLFMAN_INPUT_H
 #define WOLFMAN_INPUT_H
 
-#include <QString>
-#include <QMap>
+#include "qstring.h"
 #include <functional>
 
 namespace WolfManAlpha {

@@ -1,7 +1,7 @@
 #ifndef GAME_PARTY_H
 #define GAME_PARTY_H
 
-#include <QList>
+#include "qstring.h"
 
 class Game_Actor;
 

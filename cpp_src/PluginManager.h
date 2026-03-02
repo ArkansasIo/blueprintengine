@@ -1,9 +1,9 @@
 #ifndef PLUGINMANAGER_H
 #define PLUGINMANAGER_H
 
-#include <QString>
-#include <QMap>
-#include <QList>
+#include "qstring.h"
+#include "qstring.h"
+#include "qstring.h"
 
 class PluginManager {
 public:

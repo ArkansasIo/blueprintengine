@@ -1,0 +1,5 @@
+#ifndef QSTATUSBAR_H
+#define QSTATUSBAR_H
+#include "qstring.h"
+class QStatusBar : public QWidget { };
+#endif

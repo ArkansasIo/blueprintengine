@@ -1,8 +1,8 @@
 #ifndef STORAGE_MANAGER_H
 #define STORAGE_MANAGER_H
 
-#include <QString>
-#include <QByteArray>
+#include "qstring.h"
+#include "qstring.h"
 
 class StorageManager {
 public:

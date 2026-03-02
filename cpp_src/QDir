@@ -1,0 +1,5 @@
+#ifndef QDIR_H
+#define QDIR_H
+#include "qstring.h"
+class QDir { };
+#endif

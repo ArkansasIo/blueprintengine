@@ -1,7 +1,7 @@
 #ifndef GAME_WEAPON_H
 #define GAME_WEAPON_H
 
-#include <QString>
+#include "qstring.h"
 
 class Game_Weapon {
 public:

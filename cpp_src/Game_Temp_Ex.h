@@ -1,8 +1,8 @@
 #ifndef GAME_TEMP_H
 #define GAME_TEMP_H
 
-#include <QString>
-#include <QList>
+#include "qstring.h"
+#include "qstring.h"
 
 class Game_Temp {
 public:

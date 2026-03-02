@@ -1,8 +1,8 @@
 #ifndef BATTLEMANAGER_H
 #define BATTLEMANAGER_H
 
-#include <QString>
-#include <QList>
+#include "qstring.h"
+#include "qstring.h"
 
 class BattleManager {
 public:

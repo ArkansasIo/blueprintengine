@@ -1,0 +1,5 @@
+#ifndef QMESSAGEBOX_H
+#define QMESSAGEBOX_H
+#include "qstring.h"
+class QMessageBox { };
+#endif

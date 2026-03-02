@@ -2,7 +2,7 @@
 #define WINDOW_BASE_H
 
 #include "../graphics/Sprite.h"
-#include <QString>
+#include "qstring.h"
 
 namespace LunaLite {
 namespace UI {

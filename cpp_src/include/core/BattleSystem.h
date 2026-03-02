@@ -3,7 +3,7 @@
 
 #include "GameActorFull.h"
 #include "../utils/Types.h"
-#include <QVector>
+#include "qvector.h"
 
 namespace LunaLite {
 namespace Core {

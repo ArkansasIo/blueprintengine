@@ -2,7 +2,7 @@
 #define WINDOW_COMMAND_H
 
 #include "Window_Selectable.h"
-#include <QStringList>
+#include "qstring.h"
 
 class Window_Command : public Window_Selectable {
 public:

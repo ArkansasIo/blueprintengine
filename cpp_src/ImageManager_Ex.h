@@ -1,7 +1,7 @@
 #ifndef IMAGEMANAGER_EX_H
 #define IMAGEMANAGER_EX_H
 
-#include <QString>
+#include "qstring.h"
 
 class ImageManager {
 public:

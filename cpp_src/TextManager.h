@@ -1,8 +1,8 @@
 #ifndef TEXT_MANAGER_H
 #define TEXT_MANAGER_H
 
-#include <QString>
-#include <QMap>
+#include "qstring.h"
+#include "qstring.h"
 
 class TextManager {
 public:

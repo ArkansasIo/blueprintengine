@@ -1,0 +1,5 @@
+#ifndef QSTACKEDWIDGET_H
+#define QSTACKEDWIDGET_H
+#include "qstring.h"
+class QStackedWidget : public QWidget { };
+#endif

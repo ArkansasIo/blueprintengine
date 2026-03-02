@@ -1,8 +1,8 @@
 #ifndef WOLFMAN_UTILS_H
 #define WOLFMAN_UTILS_H
 
-#include <QString>
-#include <QVector>
+#include "qstring.h"
+#include "qvector.h"
 #include <cmath>
 
 namespace WolfManAlpha {

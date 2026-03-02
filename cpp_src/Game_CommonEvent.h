@@ -1,7 +1,7 @@
 #ifndef GAME_COMMONVENT_H
 #define GAME_COMMONVENT_H
 
-#include <QString>
+#include "qstring.h"
 
 class Game_CommonEvent {
 public:

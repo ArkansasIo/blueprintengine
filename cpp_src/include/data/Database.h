@@ -1,9 +1,9 @@
 #ifndef DATABASE_H
 #define DATABASE_H
 
-#include <QVector>
-#include <QMap>
-#include <QString>
+#include "qvector.h"
+#include "qstring.h"
+#include "qstring.h"
 #include "../utils/Types.h"
 
 namespace LunaLite {

@@ -1,7 +1,7 @@
 #ifndef GAME_MANAGER_H
 #define GAME_MANAGER_H
 
-#include <QString>
+#include "qstring.h"
 #include "../core/StateMachine.h"
 
 namespace LunaLite {

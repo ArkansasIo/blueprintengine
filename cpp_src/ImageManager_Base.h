@@ -1,8 +1,8 @@
 #ifndef IMAGEMANAGER_H
 #define IMAGEMANAGER_H
 
-#include <QString>
-#include <QMap>
+#include "qstring.h"
+#include "qstring.h"
 
 class Bitmap;
 

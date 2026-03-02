@@ -1,8 +1,8 @@
 #ifndef AUDIO_MANAGER_H
 #define AUDIO_MANAGER_H
 
-#include <QString>
-#include <QMap>
+#include "qstring.h"
+#include "qstring.h"
 
 namespace LunaLite {
 namespace Managers {

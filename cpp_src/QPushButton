@@ -1,0 +1,5 @@
+#ifndef QPUSHBUTTON_H
+#define QPUSHBUTTON_H
+#include "qstring.h"
+class QPushButton : public QWidget { };
+#endif

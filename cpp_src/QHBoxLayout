@@ -1,0 +1,5 @@
+#ifndef QHBOXLAYOUT_H
+#define QHBOXLAYOUT_H
+#include "qstring.h"
+class QHBoxLayout { };
+#endif

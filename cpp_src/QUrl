@@ -1,0 +1,5 @@
+#ifndef QURL_H
+#define QURL_H
+#include "qstring.h"
+class QUrl { };
+#endif

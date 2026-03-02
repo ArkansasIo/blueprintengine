@@ -1,7 +1,7 @@
 #ifndef GAME_ACTORS_H
 #define GAME_ACTORS_H
 
-#include <QVector>
+#include "qvector.h"
 
 class Game_Actor;
 

@@ -1,0 +1,5 @@
+#ifndef QTEXTEDIT_H
+#define QTEXTEDIT_H
+#include "qstring.h"
+class QTextEdit : public QWidget { };
+#endif

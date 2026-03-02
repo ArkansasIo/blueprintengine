@@ -1,9 +1,9 @@
 #ifndef RESOURCE_MANAGER_H
 #define RESOURCE_MANAGER_H
 
-#include <QString>
-#include <QMap>
-#include <QPixmap>
+#include "qstring.h"
+#include "qstring.h"
+#include "qstring.h"
 
 namespace LunaLite {
 namespace Managers {

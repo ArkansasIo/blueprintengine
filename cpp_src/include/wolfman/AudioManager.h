@@ -1,8 +1,7 @@
 #ifndef WOLFMAN_AUDIO_H
 #define WOLFMAN_AUDIO_H
 
-#include <QString>
-#include <QMap>
+#include "qstring.h"
 
 namespace WolfManAlpha {
 

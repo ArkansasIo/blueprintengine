@@ -1,5 +1,18 @@
 cmake_minimum_required(VERSION 3.16)
+
+# Set compiler explicitly before project declaration
+set(CMAKE_C_COMPILER "cl.exe" CACHE STRING "C compiler")
+set(CMAKE_CXX_COMPILER "cl.exe" CACHE STRING "C++ compiler")
+
 project(LunaLite)
+
+# Platform detection and compiler setup
+if(MSVC)
+    message(STATUS "MSVC Compiler Detected")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4 /EHsc")
+else()
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -fPIC")
+endif()
 
 # C++ Standard
 set(CMAKE_CXX_STANDARD 17)
@@ -8,15 +21,12 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # Make sure our current directory is first in include paths
 include_directories(BEFORE ${CMAKE_CURRENT_SOURCE_DIR})
 
-# Platform-specific flags
-if(MSVC)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4 /EHsc")
-else()
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -fPIC")
+# Optional Qt Configuration
+if(NOT DEFINED ENABLE_QT)
+    set(ENABLE_QT OFF)
 endif()
 
-# Optional Qt Configuration
-option(ENABLE_QT "Use Qt5 for GUI components" OFF)
+message(STATUS "ENABLE_QT: ${ENABLE_QT}")
 
 if(ENABLE_QT)
     set(CMAKE_AUTOMOC ON)
@@ -34,7 +44,7 @@ if(ENABLE_QT)
     
     message(STATUS "Qt5 Support: ENABLED")
 else()
-    message(STATUS "Qt5 Support: DISABLED")
+    message(STATUS "Qt5 Support: DISABLED - Skipping Qt5 discovery")
 endif()
 
 # Add all source files

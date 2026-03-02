@@ -1,12 +1,12 @@
 #ifndef LUNALITE_TYPES_H
 #define LUNALITE_TYPES_H
 
-#include <QString>
-#include <QVector>
-#include <QMap>
-#include <QRect>
-#include <QSize>
-#include <QPoint>
+#include "qstring.h"
+#include "qvector.h"
+#include "qstring.h"
+#include "qstring.h"
+#include "qstring.h"
+#include "qstring.h"
 
 namespace LunaLite {
 

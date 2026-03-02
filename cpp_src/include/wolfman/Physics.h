@@ -1,7 +1,7 @@
 #ifndef WOLFMAN_PHYSICS_H
 #define WOLFMAN_PHYSICS_H
 
-#include <QVector>
+#include "qvector.h"
 
 namespace WolfManAlpha {
 

@@ -1,7 +1,7 @@
 #ifndef GAME_TROOP_H
 #define GAME_TROOP_H
 
-#include <QList>
+#include "qstring.h"
 
 class Game_Troop {
 public:

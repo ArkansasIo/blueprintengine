@@ -5,37 +5,36 @@
 #include <vector>
 #include <map>
 #include <cstdlib>
-#include <cmath>
-#include <cctype>
-
-// Minimal Qt stub implementations for compilation
+#include <algorithm>
+#include <iostream>
 
 typedef unsigned int uint;
 typedef unsigned short ushort;
 typedef unsigned char uchar;
+
+// Minimal Qt stub implementations for compilation
 
 class QString : public std::string {
 public:
     QString() : std::string() {}
     QString(const char* str) : std::string(str ? str : "") {}
     QString(const std::string& str) : std::string(str) {}
-    
     const char* toLatin1() const { return c_str(); }
     const char* toStdString() const { return c_str(); }
-    int length() const { return size(); }
+    int length() const { return static_cast<int>(size()); }
     QString mid(int pos, int len = -1) const {
         if (len < 0) return QString(substr(pos));
         return QString(substr(pos, len));
     }
     QString toUpper() const {
-        QString result(*this);
-        for (char& c : result) c = std::toupper(c);
-        return result;
+        QString r(*this);
+        for (char& c : r) c = std::toupper(c);
+        return r;
     }
     QString toLower() const {
-        QString result(*this);
-        for (char& c : result) c = std::tolower(c);
-        return result;
+        QString r(*this);
+        for (char& c : r) c = std::tolower(c);
+        return r;
     }
     static QString number(int n) { return QString(std::to_string(n)); }
     static QString number(double d) { return QString(std::to_string(d)); }
@@ -50,7 +49,6 @@ public:
     QVariant(int i) : data(std::to_string(i)) {}
     QVariant(double d) : data(std::to_string(d)) {}
     QVariant(bool b) : data(b ? "true" : "false") {}
-    
     QString toString() const { return QString(data); }
     int toInt() const { return atoi(data.c_str()); }
     double toDouble() const { return atof(data.c_str()); }
@@ -73,107 +71,101 @@ public:
 
 class QApplication {
 public:
-    QApplication(int& argc, char** argv) {}
+    QApplication(int&, char**) {}
     static int exec() { return 0; }
     static QApplication* instance() { return nullptr; }
 };
 
-class QMainWindow : public QWidget {
-public:
-    virtual ~QMainWindow() {}
-};
-
 class QPainter {
 public:
-    QPainter() {}
-    void drawRect(int x, int y, int w, int h) {}
-    void fillRect(int x, int y, int w, int h, const class QColor&) {}
+    void drawRect(int,int,int,int) {}
 };
 
 class QColor {
 public:
-    QColor() : r(0), g(0), b(0) {}
-    QColor(int rr, int gg, int bb) : r(rr), g(gg), b(bb) {}
-private:
-    int r, g, b;
+    QColor() {}
+    QColor(int,int,int) {}
 };
 
 class QImage {
 public:
     QImage() {}
-    QImage(int w, int h, int f) {}
+    QImage(int,int,int) {}
     int width() const { return 0; }
-    int height() const { return 0; }
+    int height() const { return 0;}
 };
 
 class QPixmap {
 public:
     QPixmap() {}
-    QPixmap(const QString& f) {}
+    QPixmap(const QString&) {}
 };
 
 class QTimer : public QObject {
 public:
-    void start(int ms) {}
+    void start(int) {}
     void stop() {}
-    void setSingleShot(bool) {}
 };
 
 class QRect {
 public:
-    QRect() : x(0), y(0), w(0), h(0) {}
-    QRect(int xx, int yy, int ww, int hh) : x(xx), y(yy), w(ww), h(hh) {}
-    int x, y, w, h;
+    int x,y,w,h;
+    QRect() : x(0),y(0),w(0),h(0) {}
+    QRect(int xx, int yy, int ww, int hh) : x(xx),y(yy),w(ww),h(hh) {}
     int width() const { return w; }
     int height() const { return h; }
 };
 
 class QPoint {
 public:
-    QPoint() : x(0), y(0) {}
-    QPoint(int xx, int yy) : x(xx), y(yy) {}
-    int x, y;
+    int x,y;
+    QPoint() : x(0),y(0) {}
+    QPoint(int xx, int yy) : x(xx),y(yy) {}
 };
 
 class QSize {
 public:
-    QSize() : w(0), h(0) {}
-    QSize(int ww, int hh) : w(ww), h(hh) {}
-    int w, h;
+    int w,h;
+    QSize() : w(0),h(0) {}
+    QSize(int ww, int hh) : w(ww),h(hh) {}
     int width() const { return w; }
     int height() const { return h; }
 };
 
 class QFile {
 private:
-    std::string filename;
     bool opened = false;
 public:
     QFile() {}
-    QFile(const QString& f) : filename(f) {}
-    bool open(int mode = 0) { opened = true; return true; }
+    QFile(const QString&) {}
+    bool open(int = 0) { opened = true; return true; }
     void close() { opened = false; }
     bool isOpen() const { return opened; }
     QString readAll() { return QString(""); }
 };
 
+// Template containers - simplified to avoid MSVC issues
+
 template<typename T>
-class QList {
-    std::vector<T> data;
+class QList : public std::vector<T> {
 public:
-    void append(const T& t) { data.push_back(t); }
-    int size() const { return data.size(); }
-    int count() const { return data.size(); }
-    T& operator[](int i) { return data[i]; }
-    const T& operator[](int i) const { return data[i]; }
+    void append(const T& t) { this->push_back(t); }
+    int size() const { return (int)std::vector<T>::size(); }
+    int count() const { return (int)std::vector<T>::size(); }
 };
 
 template<typename K, typename V>
-class QMap {
-    std::map<K, V> data;
+class QMap : public std::map<K,V> {
 public:
-    V& operator[](const K& k) { return data[k]; }
-    bool contains(const K& k) const { return data.find(k) != data.end(); }
+    bool contains(const K& k) const { return std::map<K,V>::find(k) != std::map<K,V>::end(); }
+};
+
+template<typename T>
+class QVector : public std::vector<T> {
+public:
+    void append(const T& t) { this->push_back(t); }
+    int size() const { return (int)std::vector<T>::size(); }
+    int count() const { return (int)std::vector<T>::size(); }
 };
 
 inline int qBound(int min, int v, int max) {
@@ -195,4 +187,4 @@ inline double qBound(double min, double v, double max) {
 #define Q_SLOT
 #define Q_SIGNAL
 
-#endif // QSTRING_H
+#endif

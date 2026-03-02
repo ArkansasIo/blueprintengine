@@ -1,8 +1,8 @@
 #ifndef GAME_EVENT_H
 #define GAME_EVENT_H
 
-#include <QString>
-#include <QList>
+#include "qstring.h"
+#include "qstring.h"
 
 class Game_Event {
 public:

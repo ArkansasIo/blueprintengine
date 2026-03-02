@@ -1,9 +1,8 @@
 #ifndef WOLFMAN_ENTITY_COMPONENT_SYSTEM_H
 #define WOLFMAN_ENTITY_COMPONENT_SYSTEM_H
 
-#include <QString>
-#include <QMap>
-#include <QVector>
+#include "qstring.h"
+#include "qvector.h"
 #include <memory>
 #include <typeinfo>
 

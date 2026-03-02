@@ -1,9 +1,7 @@
 #ifndef WOLFMAN_SCRIPTING_H
 #define WOLFMAN_SCRIPTING_H
 
-#include <QString>
-#include <QMap>
-#include <QVariant>
+#include "qstring.h"
 #include <functional>
 
 namespace WolfManAlpha {

@@ -1,7 +1,7 @@
 #ifndef SCENE_BASE_H
 #define SCENE_BASE_H
 
-#include <QString>
+#include "qstring.h"
 
 class Scene_Base {
 public:

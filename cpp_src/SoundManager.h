@@ -1,7 +1,7 @@
 #ifndef SOUNDMANAGER_H
 #define SOUNDMANAGER_H
 
-#include <QString>
+#include "qstring.h"
 
 class SoundManager {
 public:

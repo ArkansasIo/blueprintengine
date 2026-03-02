@@ -2,7 +2,7 @@
 #define GAME_OBJECT_H
 
 #include "../utils/Types.h"
-#include <QString>
+#include "qstring.h"
 
 namespace LunaLite {
 namespace Core {

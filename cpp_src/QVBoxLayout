@@ -1,0 +1,5 @@
+#ifndef QVBOXLAYOUT_H
+#define QVBOXLAYOUT_H
+#include "qstring.h"
+class QVBoxLayout { };
+#endif

@@ -2,8 +2,8 @@
 #define GAME_ACTOR_H
 
 #include "Game_BattlerBase.h"
-#include <QList>
-#include <QMap>
+#include "qstring.h"
+#include "qstring.h"
 
 class Game_Actor : public Game_BattlerBase {
 public:

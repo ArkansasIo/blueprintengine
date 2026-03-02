@@ -1,8 +1,8 @@
 #ifndef GAME_BATTLERBASE_H
 #define GAME_BATTLERBASE_H
 
-#include <QString>
-#include <QList>
+#include "qstring.h"
+#include "qstring.h"
 
 class Game_BattlerBase {
 public:

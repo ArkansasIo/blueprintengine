@@ -1,7 +1,7 @@
 #ifndef COLORMANAGER_H
 #define COLORMANAGER_H
 
-#include <QColor>
+#include "qcolor.h"
 
 class ColorManager {
 public:

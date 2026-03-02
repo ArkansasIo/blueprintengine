@@ -2,7 +2,7 @@
 #define ANIMATION_H
 
 #include "../graphics/Sprite.h"
-#include <QVector>
+#include "qvector.h"
 
 namespace LunaLite {
 namespace Graphics {

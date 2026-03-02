@@ -1,0 +1,5 @@
+#ifndef QJSONARRAY_H
+#define QJSONARRAY_H
+#include "qstring.h"
+class QJsonArray { };
+#endif

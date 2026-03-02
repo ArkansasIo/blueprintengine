@@ -1,7 +1,7 @@
 #ifndef GAME_PARTY_H
 #define GAME_PARTY_H
 
-#include <QVector>
+#include "qvector.h"
 #include "GameObject.h"
 #include "GameActorFull.h"
 #include "../utils/Types.h"

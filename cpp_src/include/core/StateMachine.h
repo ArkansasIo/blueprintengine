@@ -1,8 +1,8 @@
 #ifndef STATE_MACHINE_H
 #define STATE_MACHINE_H
 
-#include <QString>
-#include <QMap>
+#include "qstring.h"
+#include "qstring.h"
 
 namespace LunaLite {
 namespace Core {

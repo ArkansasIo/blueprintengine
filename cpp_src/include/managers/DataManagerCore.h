@@ -1,9 +1,9 @@
 #ifndef DATA_MANAGER_CORE_H
 #define DATA_MANAGER_CORE_H
 
-#include <QString>
-#include <QMap>
-#include <QVector>
+#include "qstring.h"
+#include "qstring.h"
+#include "qvector.h"
 #include "../utils/Types.h"
 
 namespace LunaLite {

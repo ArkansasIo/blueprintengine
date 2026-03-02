@@ -1,0 +1,5 @@
+#ifndef QSCROLLAREA_H
+#define QSCROLLAREA_H
+#include "qstring.h"
+class QScrollArea : public QWidget { };
+#endif

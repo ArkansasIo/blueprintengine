@@ -1,9 +1,9 @@
 #ifndef DATAMANAGER_H
 #define DATAMANAGER_H
 
-#include <QString>
-#include <QList>
-#include <QJsonObject>
+#include "qstring.h"
+#include "qstring.h"
+#include "qstring.h"
 
 class DataManager {
 public:

@@ -1,0 +1,5 @@
+#ifndef QPRINTER_H
+#define QPRINTER_H
+#include "qstring.h"
+class QPrinter { };
+#endif

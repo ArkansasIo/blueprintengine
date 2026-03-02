@@ -1,8 +1,8 @@
 #ifndef GAME_SCREEN_H
 #define GAME_SCREEN_H
 
-#include <QVector>
-#include <QString>
+#include "qvector.h"
+#include "qstring.h"
 
 namespace LunaLite {
 namespace Graphics {

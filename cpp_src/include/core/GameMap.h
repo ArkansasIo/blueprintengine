@@ -2,9 +2,9 @@
 #define GAME_MAP_H
 
 #include "../utils/Types.h"
-#include <QString>
-#include <QVector>
-#include <QMap>
+#include "qstring.h"
+#include "qvector.h"
+#include "qstring.h"
 
 namespace LunaLite {
 namespace Core {

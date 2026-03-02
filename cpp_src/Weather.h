@@ -1,7 +1,7 @@
 #ifndef WEATHER_H
 #define WEATHER_H
 
-#include <QString>
+#include "qstring.h"
 
 class Weather {
 public:

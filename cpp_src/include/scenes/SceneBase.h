@@ -2,7 +2,7 @@
 #define SCENE_BASE_H
 
 #include "GameObject.h"
-#include <QString>
+#include "qstring.h"
 
 namespace LunaLite {
 namespace Scenes {

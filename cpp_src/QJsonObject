@@ -1,0 +1,5 @@
+#ifndef QJSONOBJECT_H
+#define QJSONOBJECT_H
+#include "qstring.h"
+class QJsonObject { };
+#endif

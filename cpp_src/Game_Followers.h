@@ -1,7 +1,7 @@
 #ifndef GAME_FOLLOWERS_H
 #define GAME_FOLLOWERS_H
 
-#include <QVector>
+#include "qvector.h"
 
 class Game_Character;
 

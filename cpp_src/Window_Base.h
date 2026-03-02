@@ -1,8 +1,8 @@
 #ifndef WINDOW_BASE_H
 #define WINDOW_BASE_H
 
-#include <QString>
-#include <QRect>
+#include "qstring.h"
+#include "qstring.h"
 
 class Window_Base {
 public:

@@ -1,7 +1,7 @@
 #ifndef GAME_PLAYER_H
 #define GAME_PLAYER_H
 
-#include <QString>
+#include "qstring.h"
 
 class Game_Player {
 public:

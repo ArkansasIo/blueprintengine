@@ -1,0 +1,5 @@
+#ifndef QLABEL_H
+#define QLABEL_H
+#include "qstring.h"
+class QLabel : public QWidget { };
+#endif

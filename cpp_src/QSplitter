@@ -1,0 +1,5 @@
+#ifndef QSPLITTER_H
+#define QSPLITTER_H
+#include "qstring.h"
+class QSplitter : public QWidget { };
+#endif

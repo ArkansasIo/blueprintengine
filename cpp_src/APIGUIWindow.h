@@ -1,15 +1,15 @@
 #ifndef APIGUIWINDOW_H
 #define APIGUIWINDOW_H
 
-#include <QMainWindow>
-#include <QListWidget>
-#include <QTextEdit>
-#include <QPushButton>
-#include <QLineEdit>
-#include <QSplitter>
-#include <QStackedWidget>
-#include <QLabel>
-#include <QStatusBar>
+#include "qstring.h"
+#include "qstring.h"
+#include "qstring.h"
+#include "qstring.h"
+#include "qstring.h"
+#include "qstring.h"
+#include "qstring.h"
+#include "qstring.h"
+#include "qstring.h"
 
 /**
  * @class APIGUIWindow

@@ -1,8 +1,8 @@
 #ifndef GAME_SELFSWITCHES_H
 #define GAME_SELFSWITCHES_H
 
-#include <QMap>
-#include <QString>
+#include "qstring.h"
+#include "qstring.h"
 
 class Game_SelfSwitches {
 public:

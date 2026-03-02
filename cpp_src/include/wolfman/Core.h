@@ -1,9 +1,8 @@
 #ifndef WOLFMAN_ALPHA_CORE_H
 #define WOLFMAN_ALPHA_CORE_H
 
-#include <QString>
-#include <QVector>
-#include <QMap>
+#include "qstring.h"
+#include "qvector.h"
 #include <memory>
 
 namespace WolfManAlpha {

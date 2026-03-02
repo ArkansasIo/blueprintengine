@@ -1,7 +1,7 @@
 #ifndef GAME_VEHICLE_H
 #define GAME_VEHICLE_H
 
-#include <QString>
+#include "qstring.h"
 
 class Game_Vehicle {
 public:

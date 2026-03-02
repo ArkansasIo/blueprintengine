@@ -1,0 +1,4 @@
+#ifndef QBYTEARRAY_H
+#define QBYTEARRAY_H
+#include "qstring.h"
+#endif

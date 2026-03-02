@@ -1,0 +1,5 @@
+#ifndef QFILEDIALOG_H
+#define QFILEDIALOG_H
+#include "qstring.h"
+class QFileDialog { };
+#endif

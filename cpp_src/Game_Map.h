@@ -1,9 +1,9 @@
 #ifndef GAME_MAP_H
 #define GAME_MAP_H
 
-#include <QString>
-#include <QList>
-#include <QMap>
+#include "qstring.h"
+#include "qstring.h"
+#include "qstring.h"
 
 class Game_Map {
 public:

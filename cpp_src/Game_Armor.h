@@ -1,7 +1,7 @@
 #ifndef GAME_ARMOR_H
 #define GAME_ARMOR_H
 
-#include <QString>
+#include "qstring.h"
 
 class Game_Armor {
 public:

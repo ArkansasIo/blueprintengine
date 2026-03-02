@@ -1,7 +1,7 @@
 #ifndef GAME_VARIABLES_H
 #define GAME_VARIABLES_H
 
-#include <QMap>
+#include "qstring.h"
 
 class Game_Variables {
 public:

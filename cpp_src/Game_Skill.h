@@ -1,7 +1,7 @@
 #ifndef GAME_SKILL_H
 #define GAME_SKILL_H
 
-#include <QString>
+#include "qstring.h"
 
 class Game_Skill {
 public:

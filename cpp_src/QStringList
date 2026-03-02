@@ -1,0 +1,5 @@
+#ifndef QSTRINGLIST_H
+#define QSTRINGLIST_H
+#include "qstring.h"
+class QStringList : public QList<QString> { };
+#endif

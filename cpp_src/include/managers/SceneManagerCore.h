@@ -2,7 +2,7 @@
 #define SCENE_MANAGER_CORE_H
 
 #include "SceneBase.h"
-#include <QStack>
+#include "qstring.h"
 
 namespace LunaLite {
 namespace Managers {

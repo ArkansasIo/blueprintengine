@@ -2,8 +2,8 @@
 #define TIME_MANAGER_H
 
 #include <chrono>
-#include <QTimer>
-#include <QObject>
+#include "qstring.h"
+#include "qobject.h"
 
 class TimeManager : public QObject {
     Q_OBJECT

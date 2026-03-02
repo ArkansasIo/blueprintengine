@@ -1,9 +1,9 @@
 #ifndef CONFIGURATION_MANAGER_H
 #define CONFIGURATION_MANAGER_H
 
-#include <QString>
-#include <QMap>
-#include <QVariant>
+#include "qstring.h"
+#include "qstring.h"
+#include "qstring.h"
 
 namespace LunaLite {
 namespace Managers {

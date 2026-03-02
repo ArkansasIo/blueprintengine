@@ -1,9 +1,8 @@
 #ifndef WOLFMAN_NETWORK_H
 #define WOLFMAN_NETWORK_H
 
-#include <QString>
-#include <QVector>
-#include <QMap>
+#include "qstring.h"
+#include "qvector.h"
 #include <functional>
 
 namespace WolfManAlpha {

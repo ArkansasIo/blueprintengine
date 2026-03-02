@@ -1,0 +1,5 @@
+#ifndef QDESKTOPSERVICES_H
+#define QDESKTOPSERVICES_H
+#include "qstring.h"
+class QDesktopServices { };
+#endif

@@ -79,8 +79,9 @@ Write-Host "  OK: Build directory ready" -ForegroundColor $ColorOK
 Write-Host "[3/4] Configuring CMake..." -ForegroundColor $ColorInfo
 Push-Location $BuildDir
 
-$QtFlag = if ($EnableQt) { "ON" } else { "OFF" }
-$Output = & cmake -DENABLE_QT=$QtFlag "..\cpp_src" 2>&1
+$QtFlagValue = if ($EnableQt) { "ON" } else { "OFF" }
+Write-Host "  Qt Flag: $QtFlagValue" -ForegroundColor $ColorInfo
+$Output = & cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release "-DENABLE_QT=$QtFlagValue" "..\cpp_src" 2>&1
 
 if ($LASTEXITCODE -ne 0) {
     Write-Host "ERROR: CMake configuration failed" -ForegroundColor $ColorErr

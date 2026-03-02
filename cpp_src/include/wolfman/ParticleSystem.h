@@ -1,8 +1,8 @@
 #ifndef WOLFMAN_PARTICLE_SYSTEM_H
 #define WOLFMAN_PARTICLE_SYSTEM_H
 
-#include <QString>
-#include <QVector>
+#include "qstring.h"
+#include "qvector.h"
 #include "Physics.h"
 
 namespace WolfManAlpha {

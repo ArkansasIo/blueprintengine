@@ -1,7 +1,7 @@
 #ifndef EFFECTMANAGER_H
 #define EFFECTMANAGER_H
 
-#include <QString>
+#include "qstring.h"
 
 class EffectManager {
 public:

@@ -1,9 +1,9 @@
 #ifndef INPUT_HANDLER_H
 #define INPUT_HANDLER_H
 
-#include <QObject>
-#include <QSet>
-#include <QString>
+#include "qobject.h"
+#include "qstring.h"
+#include "qstring.h"
 
 class InputHandler : public QObject {
     Q_OBJECT

@@ -1,0 +1,5 @@
+#ifndef QLISTWIDGET_H
+#define QLISTWIDGET_H
+#include "qstring.h"
+class QListWidget : public QWidget { };
+#endif

@@ -1,9 +1,9 @@
 #ifndef GAME_INTERPRETER_H
 #define GAME_INTERPRETER_H
 
-#include <QString>
-#include <QList>
-#include <QMap>
+#include "qstring.h"
+#include "qstring.h"
+#include "qstring.h"
 
 class Game_Interpreter {
 public:
