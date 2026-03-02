@@ -1,4 +1,5 @@
 #include "Game_BattlerBase.h"
+#include <algorithm>
 
 Game_BattlerBase::Game_BattlerBase()
     : _hp(0), _mp(0), _tp(0), _level(1), _hidden(0) {
@@ -35,7 +36,7 @@ int Game_BattlerBase::hp() const {
 }
 
 void Game_BattlerBase::setHp(int value) {
-    _hp = qMax(0, qMin(value, maxHp()));
+    _hp = std::max(0, std::min(value, maxHp()));
 }
 
 int Game_BattlerBase::mp() const {
@@ -43,7 +44,7 @@ int Game_BattlerBase::mp() const {
 }
 
 void Game_BattlerBase::setMp(int value) {
-    _mp = qMax(0, qMin(value, maxMp()));
+    _mp = std::max(0, std::min(value, maxMp()));
 }
 
 int Game_BattlerBase::tp() const {
@@ -51,7 +52,7 @@ int Game_BattlerBase::tp() const {
 }
 
 void Game_BattlerBase::setTp(int value) {
-    _tp = qMax(0, qMin(value, 100));
+    _tp = std::max(0, std::min(value, 100));
 }
 
 int Game_BattlerBase::mhp() const {
@@ -78,38 +79,39 @@ bool Game_BattlerBase::isEnemy() const {
     return false;
 }
 
+void Game_BattlerBase::update() {
+    // Update battler state - reset stateTurns, apply recurring states, etc
+}
+
 void Game_BattlerBase::refresh() {
 }
 
 void Game_BattlerBase::addState(int stateId) {
-    if (!_states.contains(stateId)) {
-        _states.append(stateId);
-        _stateTurns.append(0);
+    auto it = std::find(_states.begin(), _states.end(), stateId);
+    if (it == _states.end()) {
+        _states.push_back(stateId);
+        _stateTurns.push_back(0);
     }
-}
-
 void Game_BattlerBase::removeState(int stateId) {
-    int index = _states.indexOf(stateId);
-    if (index >= 0) {
-        _states.removeAt(index);
-        _stateTurns.removeAt(index);
+    auto it = std::find(_states.begin(), _states.end(), stateId);
+    if (it != _states.end()) {
+        auto index = it - _states.begin();
+        _states.erase(it);
+        _stateTurns.erase(_stateTurns.begin() + index);
     }
-}
-
 bool Game_BattlerBase::isStateAffected(int stateId) const {
-    return _states.contains(stateId);
-}
-
+    return std::find(_states.begin(), _states.end(), stateId) != _states.end();
 bool Game_BattlerBase::isStateClear() const {
     return _states.isEmpty();
 }
 
-QList<int> Game_BattlerBase::states() const {
+std::vector<int> Game_BattlerBase::states() const {
     return _states;
 }
 
 int Game_BattlerBase::stateTurns(int stateId) const {
-    int index = _states.indexOf(stateId);
+    auto it = std::find(_states.begin(), _states.end(), stateId);
+    int index = (it != _states.end()) ? (it - _states.begin()) : -1;
     return index >= 0 ? _stateTurns[index] : 0;
 }
 
@@ -127,12 +129,12 @@ void Game_BattlerBase::resetStateCounts() {
     }
 }
 
-QString Game_BattlerBase::mostImportantStateText() const {
-    return QString();
+std::string Game_BattlerBase::mostImportantStateText() const {
+    return std::string();
 }
 
-QString Game_BattlerBase::iconIndex() const {
-    return QString();
+std::string Game_BattlerBase::iconIndex() const {
+    return std::string();
 }
 
 bool Game_BattlerBase::canInput() const {
@@ -239,16 +241,16 @@ int Game_BattlerBase::charIndex() const {
     return 0;
 }
 
-QString Game_BattlerBase::characterName() const {
-    return QString();
+std::string Game_BattlerBase::characterName() const {
+    return std::string();
 }
 
 bool Game_BattlerBase::isSpriteVisible() const {
     return true;
 }
 
-QString Game_BattlerBase::battlerName() const {
-    return QString();
+std::string Game_BattlerBase::battlerName() const {
+    return std::string();
 }
 
 bool Game_BattlerBase::isConfused() const {

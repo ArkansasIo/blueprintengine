@@ -1,7 +1,7 @@
 #ifndef SCENE_BATTLESTART_H
 #define SCENE_BATTLESTART_H
 
-#include \"Scene_Base.h\"
+#include "Scene_Base.h"
 
 class Scene_BattleStart : public Scene_Base {
 public:

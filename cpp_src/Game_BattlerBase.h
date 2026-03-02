@@ -1,8 +1,8 @@
 #ifndef GAME_BATTLERBASE_H
 #define GAME_BATTLERBASE_H
 
-#include "qstring.h"
-#include "qstring.h"
+#include <string>
+#include <vector>
 
 class Game_BattlerBase {
 public:
@@ -26,17 +26,18 @@ public:
     bool isDead() const;
     bool isActor() const;
     bool isEnemy() const;
+    virtual void update();
     void refresh();
     void addState(int stateId);
     void removeState(int stateId);
     bool isStateAffected(int stateId) const;
     bool isStateClear() const;
-    QList<int> states() const;
+    std::vector<int> states() const;
     int stateTurns(int stateId) const;
     void minTurnsStateEffectRemoving(int stateId);
     void resetStateCounts();
-    QString mostImportantStateText() const;
-    QString iconIndex() const;
+    std::string mostImportantStateText() const;
+    std::string iconIndex() const;
     bool canInput() const;
     bool canMove() const;
     int speed() const;
@@ -63,9 +64,9 @@ public:
     int faceName() const;
     int faceIndex() const;
     int charIndex() const;
-    QString characterName() const;
+    std::string characterName() const;
     bool isSpriteVisible() const;
-    QString battlerName() const;
+    std::string battlerName() const;
     bool isConfused() const;
     void performActionStart();
     void performAction();
@@ -84,8 +85,8 @@ protected:
     int _mp;
     int _tp;
     int _level;
-    QList<int> _states;
-    QList<int> _stateTurns;
+    std::vector<int> _states;
+    std::vector<int> _stateTurns;
     int _hidden;
 };
 
