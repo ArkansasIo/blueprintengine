@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, ScrollView, Text, Pressable, TextInput, Modal, Alert } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useEditorStore } from '@/app/stores/editor-store';
+import * as Versioning from '@/app/utils/blueprint-versioning';
 
 interface Commit {
   id: string;
@@ -27,32 +29,68 @@ export default function VersionControlPanel() {
   const [commitMessage, setCommitMessage] = useState('');
   const [commitAuthor, setCommitAuthor] = useState('User');
   const [activeTab, setActiveTab] = useState<'history' | 'changes' | 'diff'>('history');
+  const { nodes, edges } = useEditorStore();
 
-  const handleCreateCommit = () => {
+  useEffect(() => {
+    loadCommitHistory();
+  }, []);
+
+  const loadCommitHistory = async () => {
+    try {
+      const versions = await Versioning.getVersions('current-blueprint');
+      const formattedCommits = versions.map((v) => ({
+        id: v.id,
+        timestamp: new Date(v.timestamp),
+        message: v.message,
+        author: v.author || 'Unknown',
+        changes: [],
+        nodeCount: v.nodes.length,
+        edgeCount: v.edges.length,
+      }));
+      setCommits(formattedCommits);
+    } catch (error) {
+      console.error('Error loading versions:', error);
+    }
+  };
+
+  const handleCreateCommit = async () => {
     if (!commitMessage.trim()) {
       Alert.alert('Error', 'Please enter a commit message');
       return;
     }
 
-    const newCommit: Commit = {
-      id: Date.now().toString(),
-      timestamp: new Date(),
-      message: commitMessage,
-      author: commitAuthor,
-      changes: [], // Would be populated with actual changes
-      nodeCount: 0,
-      edgeCount: 0,
-    };
+    try {
+      const version = await Versioning.saveVersion(
+        'current-blueprint',
+        nodes,
+        edges,
+        commitMessage,
+        commitAuthor
+      );
 
-    setCommits([newCommit, ...commits]);
-    setSelectedCommit(newCommit);
-    setCommitMessage('');
-    setShowCommitDialog(false);
+      const newCommit: Commit = {
+        id: version.id,
+        timestamp: new Date(version.timestamp),
+        message: version.message,
+        author: version.author || 'Unknown',
+        changes: [],
+        nodeCount: version.nodes.length,
+        edgeCount: version.edges.length,
+      };
 
-    Alert.alert('Success', 'Commit created successfully');
+      setCommits([newCommit, ...commits]);
+      setSelectedCommit(newCommit);
+      setCommitMessage('');
+      setShowCommitDialog(false);
+
+      Alert.alert('Success', `Commit "${commitMessage}" created successfully`);
+    } catch (error) {
+      Alert.alert('Error', 'Failed to create commit');
+      console.error('Commit error:', error);
+    }
   };
 
-  const handleRollback = (commit: Commit) => {
+  const handleRollback = async (commit: Commit) => {
     Alert.alert(
       'Rollback to Commit',
       `Rollback to commit "${commit.message}"?`,
@@ -61,8 +99,17 @@ export default function VersionControlPanel() {
         {
           text: 'Rollback',
           style: 'destructive',
-          onPress: () => {
-            Alert.alert('Success', 'Blueprint rolled back to this commit');
+          onPress: async () => {
+            try {
+              const restored = await Versioning.restoreVersion('current-blueprint', commit.id);
+              const { updateNodes } = useEditorStore.getState();
+              // Update the nodes and edges in store
+              restored.nodes.forEach((node) => updateNodes([node]));
+              Alert.alert('Success', `Rolled back to "${commit.message}"`);
+            } catch (error) {
+              Alert.alert('Error', 'Failed to rollback');
+              console.error('Rollback error:', error);
+            }
           },
         },
       ]

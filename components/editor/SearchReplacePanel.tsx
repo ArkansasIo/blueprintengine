@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Modal, Pressable, Text, TextInput, ScrollView, Switch } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useEditorStore } from '@/app/stores/editor-store';
 
 interface SearchResult {
   id: string;
@@ -19,56 +20,84 @@ export default function SearchReplacePanel() {
   const [caseSensitive, setCaseSensitive] = useState(false);
   const [matchWholeWord, setMatchWholeWord] = useState(false);
   const [useRegex, setUseRegex] = useState(false);
+  const { nodes, updateNode } = useEditorStore();
 
   const handleSearch = () => {
     if (!searchText.trim()) return;
 
-    // Mock search results
-    const mockResults: SearchResult[] = [
-      {
-        id: '1',
-        type: 'node',
-        name: 'GetActor Node',
-        context: 'In Event Graph',
-        lineNumber: 1,
-      },
-      {
-        id: '2',
-        type: 'property',
-        name: 'bIsAlive property',
-        context: 'On Actor Blueprint',
-        lineNumber: 15,
-      },
-      {
-        id: '3',
-        type: 'connection',
-        name: 'Execute Connection',
-        context: 'Between nodes 5 and 8',
-        lineNumber: 8,
-      },
-    ];
+    // Search in nodes by label and other properties
+    const searchResults: SearchResult[] = [];
+    nodes.forEach((node, idx) => {
+      const nodeLabel = (node as any).label || '';
+      const nodeType = (node as any).type || '';
+      const nodeData = JSON.stringify((node as any).data || {});
 
-    setResults(mockResults.filter((r) =>
-      caseSensitive
-        ? r.name.includes(searchText)
-        : r.name.toLowerCase().includes(searchText.toLowerCase())
-    ));
+      const searchPattern = useRegex
+        ? new RegExp(searchText, caseSensitive ? 'g' : 'gi')
+        : null;
+
+      const matches = (text: string) => {
+        if (!text) return false;
+        if (searchPattern) return searchPattern.test(text);
+        if (matchWholeWord) {
+          return caseSensitive
+            ? text === searchText
+            : text.toLowerCase() === searchText.toLowerCase();
+        }
+        return caseSensitive
+          ? text.includes(searchText)
+          : text.toLowerCase().includes(searchText.toLowerCase());
+      };
+
+      if (matches(nodeLabel) || matches(nodeType) || matches(nodeData)) {
+        searchResults.push({
+          id: node.id,
+          type: 'node',
+          name: nodeLabel || nodeType,
+          context: `Node at (${node.position.x}, ${node.position.y})`,
+          lineNumber: idx + 1,
+        });
+      }
+    });
+
+    setResults(searchResults);
   };
 
   const handleReplace = () => {
     if (!replaceText.trim() || results.length === 0) return;
-    // Replace first occurrence logic
-    console.log('Replacing:', searchText, 'with:', replaceText);
-    // Remove first result and update state
-    setResults(results.slice(1));
+    const firstResult = results[0];
+    const node = nodes.find((n) => n.id === firstResult.id);
+
+    if (node && firstResult.type === 'node') {
+      updateNode(node.id, {
+        ...node,
+        label: (node as any).label?.replace(searchText, replaceText) || '',
+      });
+      setResults(results.slice(1));
+    }
   };
 
   const handleReplaceAll = () => {
     if (!replaceText.trim() || results.length === 0) return;
-    // Replace all occurrences logic
-    console.log('Replacing all:', searchText, 'with:', replaceText);
-    // Clear all results
+    let replacedCount = 0;
+
+    results.forEach((result) => {
+      const node = nodes.find((n) => n.id === result.id);
+      if (node && result.type === 'node') {
+        const oldLabel = (node as any).label || '';
+        const newLabel = oldLabel.replace(
+          new RegExp(searchText, 'g'),
+          replaceText
+        );
+        if (newLabel !== oldLabel) {
+          updateNode(node.id, { ...node, label: newLabel });
+          replacedCount++;
+        }
+      }
+    });
+
     setResults([]);
+    console.log(`Replaced ${replacedCount} occurrences`);
   };
 
   return (
