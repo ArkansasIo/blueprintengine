@@ -4,6 +4,10 @@ Window_Selectable::Window_Selectable(const QRect &rect)
     : Window_Base(rect), _index(0), _cursorFixValue(0) {
 }
 
+
+Window_Selectable::Window_Selectable(int x, int y, int width, int height)
+    : Window_Base(QRect(x, y, width, height)), _index(0), _cursorFixValue(0) {
+}
 Window_Selectable::~Window_Selectable() {
 }
 

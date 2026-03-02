@@ -1,0 +1,7 @@
+﻿// Add to qstring.h after line 50
+
+// qBound template function - clamps value between min and max
+template<typename T>
+inline T qBound(T min, T value, T max) {
+    return (value < min) ? min : ((value > max) ? max : value);
+}

@@ -9,7 +9,7 @@ public:
     ~Game_Battler();
 
     void initialize() override;
-    void update() override;
+    void update();
     
     void regenerateHp();
     void regenerateMp();

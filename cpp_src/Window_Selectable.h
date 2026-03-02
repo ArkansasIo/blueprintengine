@@ -6,6 +6,7 @@
 class Window_Selectable : public Window_Base {
 public:
     Window_Selectable(const QRect &rect = QRect());
+    Window_Selectable(int x, int y, int width, int height);
     virtual ~Window_Selectable();
 
     virtual void initialize();

@@ -10,7 +10,7 @@ public:
     void update();
     void refresh();
     
-    void setShaderProgram(const QString &program);
+    void setShaderProgram(const char* program);
 
 private:
 };
