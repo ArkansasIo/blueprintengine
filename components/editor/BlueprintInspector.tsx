@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, ScrollView, Text, TextInput, Pressable, Switch } from 'react-native';
+import { View, StyleSheet, ScrollView, Text, TextInput, Pressable, Switch, Alert } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useEditorStore } from '@/app/stores/editor-store';
 
 interface InspectorSection {
   id: string;
@@ -18,10 +19,54 @@ export default function BlueprintInspector() {
     { id: 'advanced', title: 'Advanced', icon: 'cog', expanded: false },
   ]);
 
+  const { addNode } = useEditorStore();
+
   const toggleSection = (id: string) => {
     setSections(
       sections.map((s) => (s.id === id ? { ...s, expanded: !s.expanded } : s))
     );
+  };
+
+  const handleAddVariable = () => {
+    const variableNode = {
+      id: `var-${Date.now()}`,
+      label: 'New Variable',
+      type: 'variable',
+      position: { x: Math.random() * 200, y: Math.random() * 200 },
+      data: { variableType: 'Float', defaultValue: 0 },
+      inputs: [],
+      outputs: [{ id: 'var-out', label: 'Value', type: 'any' }],
+    };
+    addNode(variableNode);
+    Alert.alert('Success', 'Variable node added to blueprint');
+  };
+
+  const handleAddFunction = () => {
+    const functionNode = {
+      id: `func-${Date.now()}`,
+      label: 'New Function',
+      type: 'function',
+      position: { x: Math.random() * 200, y: Math.random() * 200 },
+      data: { functionReturnType: 'void' },
+      inputs: [{ id: 'func-in', label: 'Execute', type: 'execution' }],
+      outputs: [{ id: 'func-out', label: 'Execute', type: 'execution' }],
+    };
+    addNode(functionNode);
+    Alert.alert('Success', 'Function node added to blueprint');
+  };
+
+  const handleAddEvent = () => {
+    const eventNode = {
+      id: `event-${Date.now()}`,
+      label: 'New Event',
+      type: 'event',
+      position: { x: Math.random() * 200, y: Math.random() * 200 },
+      data: { eventName: 'CustomEvent' },
+      inputs: [],
+      outputs: [{ id: 'event-out', label: 'Execute', type: 'execution' }],
+    };
+    addNode(eventNode);
+    Alert.alert('Success', 'Event node added to blueprint');
   };
 
   return (
@@ -152,7 +197,7 @@ export default function BlueprintInspector() {
 
                 <Pressable
                   style={styles.addButton}
-                  onPress={() => console.log('Adding variable')}
+                  onPress={handleAddVariable}
                 >
                   <MaterialCommunityIcons name="plus" size={14} color="#06b6d4" />
                   <Text style={styles.addButtonText}>Add Variable</Text>
@@ -202,7 +247,7 @@ export default function BlueprintInspector() {
 
                 <Pressable
                   style={styles.addButton}
-                  onPress={() => console.log('Adding function')}
+                  onPress={handleAddFunction}
                 >
                   <MaterialCommunityIcons name="plus" size={14} color="#06b6d4" />
                   <Text style={styles.addButtonText}>Add Function</Text>
@@ -252,7 +297,7 @@ export default function BlueprintInspector() {
 
                 <Pressable
                   style={styles.addButton}
-                  onPress={() => console.log('Adding event')}
+                  onPress={handleAddEvent}
                 >
                   <MaterialCommunityIcons name="plus" size={14} color="#06b6d4" />
                   <Text style={styles.addButtonText}>Add Event</Text>

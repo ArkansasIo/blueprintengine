@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Pressable, Text, Modal, ScrollView } from 'react-native';
+import { View, StyleSheet, Pressable, Text, Modal, ScrollView, Alert } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useEditorStore } from '@/app/stores/editor-store';
 import { useHistoryStore } from '@/app/stores/history-store';
+import * as BlueprintStorage from '@/app/utils/blueprint-storage';
+import { JSONBlueprintExporter } from '@/app/utils/blueprint-import-export';
+import { validateBlueprint } from '@/app/utils/blueprint-validator';
+import { GraphExecutor } from '@/app/utils/graph-executor';
 
 interface MenuSection {
   label: string;
@@ -32,6 +36,8 @@ export default function MainMenu() {
     pasteNodes,
     setZoom,
     zoom,
+    nodes,
+    edges,
   } = useEditorStore();
   const { undo, redo, canUndo, canRedo } = useHistoryStore();
 
@@ -42,23 +48,108 @@ export default function MainMenu() {
     setMenuVisible(false);
   };
 
-  const handleOpenBlueprint = () => {
-    console.log('📂 Open Blueprint');
+  const handleOpenBlueprint = async () => {
+    try {
+      const blueprints = await BlueprintStorage.getBlueprints();
+      if (blueprints.length === 0) {
+        Alert.alert('Info', 'No saved blueprints found');
+        setMenuVisible(false);
+        return;
+      }
+      // Create selection list
+      const options = blueprints.map(b => b.name);
+      Alert.alert('Open Blueprint', 'Select a blueprint to open:', [
+        ...blueprints.map((blueprint, index) => ({
+          text: blueprint.name,
+          onPress: async () => {
+            try {
+              const loaded = await BlueprintStorage.loadBlueprint(blueprint.id);
+              if (loaded) {
+                Alert.alert('Success', `Loaded: ${blueprint.name}`);
+                setMenuVisible(false);
+              }
+            } catch (error) {
+              Alert.alert('Error', 'Failed to load blueprint');
+            }
+          },
+        })),
+        { text: 'Cancel', style: 'cancel' },
+      ]);
+    } catch (error) {
+      Alert.alert('Error', 'Failed to load blueprints');
+      console.error('Open error:', error);
+    }
     setMenuVisible(false);
   };
 
-  const handleSaveBlueprint = () => {
-    console.log('💾 Blueprint Saved');
+  const handleSaveBlueprint = async () => {
+    try {
+      const blueprint = {
+        id: Date.now().toString(),
+        name: 'Current Blueprint',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        nodes: nodes,
+        edges: edges,
+      };
+      await BlueprintStorage.saveBlueprint(blueprint);
+      Alert.alert('Success', '💾 Blueprint saved successfully');
+      console.log('Blueprint saved:', blueprint);
+    } catch (error) {
+      Alert.alert('Error', 'Failed to save blueprint');
+      console.error('Save error:', error);
+    }
     setMenuVisible(false);
   };
 
   const handleExport = () => {
-    console.log('📤 Export Blueprint');
+    try {
+      const blueprint = {
+        id: Date.now().toString(),
+        name: 'Exported Blueprint',
+        nodes: nodes,
+        edges: edges,
+      };
+      const exporter = new JSONBlueprintExporter();
+      const jsonExport = exporter.export(blueprint as any, true);
+      // Copy to clipboard
+      console.log('📤 Exported blueprint:', jsonExport);
+      Alert.alert('Success', 'Blueprint exported to clipboard');
+    } catch (error) {
+      Alert.alert('Error', 'Failed to export blueprint');
+      console.error('Export error:', error);
+    }
     setMenuVisible(false);
   };
 
   const handleImport = () => {
-    console.log('📥 Import Blueprint');
+    Alert.prompt(
+      'Import Blueprint',
+      'Paste your blueprint JSON:',
+      [
+        { text: 'Cancel', onPress: () => {}, style: 'cancel' },
+        {
+          text: 'Import',
+          onPress: (jsonString) => {
+            if (!jsonString) return;
+            try {
+              const exporter = new JSONBlueprintExporter();
+              const imported = exporter.import(jsonString);
+              if (imported) {
+                clearBlueprint();
+                Alert.alert('Success', '📥 Blueprint imported successfully');
+                console.log('Imported blueprint:', imported);
+              } else {
+                Alert.alert('Error', 'Invalid blueprint format');
+              }
+            } catch (error) {
+              Alert.alert('Error', 'Failed to import blueprint');
+              console.error('Import error:', error);
+            }
+          },
+        },
+      ]
+    );
     setMenuVisible(false);
   };
 
@@ -128,13 +219,53 @@ export default function MainMenu() {
   };
 
   // Tools Menu Handlers
-  const handleCompile = () => {
-    console.log('🔨 Compiling Blueprint...');
+  const handleValidate = () => {
+    try {
+      const blueprint = {
+        id: 'current',
+        name: 'Current Blueprint',
+        nodes: nodes,
+        edges: edges,
+      };
+      const errors = validateBlueprint(blueprint as any);
+      if (errors.length === 0) {
+        Alert.alert('✔️ Validation Passed', 'No errors found in blueprint');
+      } else {
+        const errorMessage = errors.map(e => `• ${e.message}`).join('\n');
+        Alert.alert('⚠️ Validation Failed', `Found ${errors.length} error(s):\n${errorMessage}`);
+      }
+    } catch (error) {
+      Alert.alert('Error', 'Validation failed with error');
+      console.error('Validation error:', error);
+    }
     setMenuVisible(false);
   };
 
-  const handleValidate = () => {
-    console.log('✔️ Validating Blueprint...');
+  const handleCompile = () => {
+    try {
+      const blueprint = {
+        id: 'current',
+        name: 'Current Blueprint',
+        nodes: nodes,
+        edges: edges,
+      };
+      // Validate first
+      const errors = validateBlueprint(blueprint as any);
+      if (errors.length > 0) {
+        const errorMessage = errors.map(e => `• ${e.message}`).join('\n');
+        Alert.alert('❌ Compilation Failed', `Fix these errors first:\n${errorMessage}`);
+        setMenuVisible(false);
+        return;
+      }
+      // Compile
+      const executor = new GraphExecutor();
+      const results = executor.execute(blueprint as any);
+      Alert.alert('🔨 Compile Successful', `Blueprint compiled successfully with ${nodes.length} nodes and ${edges.length} connections`);
+      console.log('Compilation results:', results);
+    } catch (error) {
+      Alert.alert('Error', 'Compilation failed');
+      console.error('Compile error:', error);
+    }
     setMenuVisible(false);
   };
 

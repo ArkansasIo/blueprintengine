@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, ScrollView, Text, Pressable, TextInput, Modal } from 'react-native';
+import { View, StyleSheet, ScrollView, Text, Pressable, TextInput, Modal, Linking, Alert } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 interface Shortcut {
@@ -123,6 +123,39 @@ export default function HelpAndShortcuts() {
 
   const categories = Array.from(new Set(shortcuts.map((s) => s.category)));
 
+  const openResource = async (url: string, title: string) => {
+    try {
+      const supported = await Linking.canOpenURL(url);
+      if (supported) {
+        await Linking.openURL(url);
+      } else {
+        Alert.alert('Info', `Cannot open this resource${'\n'}${url}`);
+      }
+    } catch (error) {
+      Alert.alert('Error', `Failed to open ${title}`);
+    }
+  };
+
+  const handleOpenDocumentation = () => openResource(
+    'https://docs.blueprintengine.io/',
+    'Documentation'
+  );
+
+  const handleOpenVideoTutorials = () => openResource(
+    'https://www.youtube.com/@blueprintengine',
+    'Video Tutorials'
+  );
+
+  const handleOpenCommunityForum = () => openResource(
+    'https://community.blueprintengine.io/',
+    'Community Forum'
+  );
+
+  const handleOpenGitHubExamples = () => openResource(
+    'https://github.com/ArkansasIo/blueprint-examples',
+    'GitHub Examples'
+  );
+
   const filteredShortcuts = shortcuts.filter((shortcut) => {
     const matchesText =
       shortcut.action.toLowerCase().includes(filterText.toLowerCase()) ||
@@ -234,7 +267,7 @@ export default function HelpAndShortcuts() {
 
           <Pressable
             style={styles.resourceItem}
-            onPress={() => console.log('Opening Documentation')}
+            onPress={handleOpenDocumentation}
           >
             <MaterialCommunityIcons name="book-open-outline" size={18} color="#06b6d4" />
             <View style={styles.resourceInfo}>
@@ -246,7 +279,7 @@ export default function HelpAndShortcuts() {
 
           <Pressable
             style={styles.resourceItem}
-            onPress={() => console.log('Opening Video Tutorials')}
+            onPress={handleOpenVideoTutorials}
           >
             <MaterialCommunityIcons name="video-outline" size={18} color="#06b6d4" />
             <View style={styles.resourceInfo}>
@@ -258,7 +291,7 @@ export default function HelpAndShortcuts() {
 
           <Pressable
             style={styles.resourceItem}
-            onPress={() => console.log('Opening Community Forum')}
+            onPress={handleOpenCommunityForum}
           >
             <MaterialCommunityIcons name="forum-outline" size={18} color="#06b6d4" />
             <View style={styles.resourceInfo}>
@@ -270,7 +303,7 @@ export default function HelpAndShortcuts() {
 
           <Pressable
             style={styles.resourceItem}
-            onPress={() => console.log('Opening GitHub Examples')}
+            onPress={handleOpenGitHubExamples}
           >
             <MaterialCommunityIcons name="github" size={18} color="#06b6d4" />
             <View style={styles.resourceInfo}>
