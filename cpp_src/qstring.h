@@ -1,12 +1,9 @@
-#ifndef QSTRING_H
+﻿#ifndef QSTRING_H
 #define QSTRING_H
 
 #include <string>
-#include <vector>
-#include <map>
 #include <cstdlib>
 #include <algorithm>
-#include <iostream>
 
 typedef unsigned int uint;
 typedef unsigned short ushort;
@@ -22,6 +19,16 @@ public:
     const char* toLatin1() const { return c_str(); }
     const char* toStdString() const { return c_str(); }
     int length() const { return static_cast<int>(size()); }
+    int toInt() const { return atoi(c_str()); }
+    double toFloat() const { return atof(c_str()); }
+    QString& replace(const QString& before, const QString& after) {
+        size_t pos = 0;
+        while ((pos = find(before, pos)) != std::string::npos) {
+            std::string::replace(pos, before.length(), after);
+            pos += after.length();
+        }
+        return *this;
+    }
     QString mid(int pos, int len = -1) const {
         if (len < 0) return QString(substr(pos));
         return QString(substr(pos, len));
@@ -81,12 +88,6 @@ public:
     void drawRect(int,int,int,int) {}
 };
 
-class QColor {
-public:
-    QColor() {}
-    QColor(int,int,int) {}
-};
-
 class QImage {
 public:
     QImage() {}
@@ -144,38 +145,6 @@ public:
     QString readAll() { return QString(""); }
 };
 
-// Template containers - simplified to avoid MSVC issues
-
-template<typename T>
-class QList : public std::vector<T> {
-public:
-    void append(const T& t) { this->push_back(t); }
-    int size() const { return (int)std::vector<T>::size(); }
-    int count() const { return (int)std::vector<T>::size(); }
-};
-
-template<typename K, typename V>
-class QMap : public std::map<K,V> {
-public:
-    bool contains(const K& k) const { return std::map<K,V>::find(k) != std::map<K,V>::end(); }
-};
-
-template<typename T>
-class QVector : public std::vector<T> {
-public:
-    void append(const T& t) { this->push_back(t); }
-    int size() const { return (int)std::vector<T>::size(); }
-    int count() const { return (int)std::vector<T>::size(); }
-};
-
-inline int qBound(int min, int v, int max) {
-    return v < min ? min : (v > max ? max : v);
-}
-
-inline double qBound(double min, double v, double max) {
-    return v < min ? min : (v > max ? max : v);
-}
-
 #define Q_OBJECT
 #define signals public
 #define slots
@@ -186,5 +155,13 @@ inline double qBound(double min, double v, double max) {
 #define Q_INVOKABLE
 #define Q_SLOT
 #define Q_SIGNAL
+
+inline int qBound(int min, int v, int max) {
+    return v < min ? min : (v > max ? max : v);
+}
+
+inline double qBound(double min, double v, double max) {
+    return v < min ? min : (v > max ? max : v);
+}
 
 #endif
