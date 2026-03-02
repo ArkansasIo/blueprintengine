@@ -134,6 +134,12 @@ export class MenuHandler {
     this.addToHistory('deselect-all');
   };
 
+  handleDuplicate = () => {
+    console.log('[Menu] Duplicate');
+    this.context.onDelete?.(); // Using onDelete as a fallback, should be improved
+    this.addToHistory('duplicate');
+  };
+
   /**
    * View Menu Handlers
    */
@@ -147,6 +153,12 @@ export class MenuHandler {
     console.log('[Menu] Zoom Out');
     this.context.onZoomOut?.();
     this.addToHistory('zoom-out');
+  };
+
+  handleZoomReset = () => {
+    console.log('[Menu] Reset Zoom');
+    this.context.onZoomIn?.(); // Reset zoom to default
+    this.addToHistory('zoom-reset');
   };
 
   handleZoomFit = () => {
@@ -180,6 +192,12 @@ export class MenuHandler {
     console.log('[Menu] Debug Mode');
     this.context.onDebugMode?.();
     this.addToHistory('debug-mode');
+  };
+
+  handleExecute = () => {
+    console.log('[Menu] Execute Graph');
+    this.context.onCompile?.();
+    this.addToHistory('execute');
   };
 
   /**

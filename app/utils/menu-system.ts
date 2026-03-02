@@ -2,6 +2,8 @@
  * Menu System - Complete menu structure for the blueprint editor IDE
  */
 
+import { MenuHandler } from './menu-handlers';
+
 export interface MenuItem {
   id: string;
   label: string;
@@ -23,6 +25,15 @@ export interface MenuContext {
   isExecuting: boolean;
 }
 
+// Create a default handler instance
+let menuHandler = new MenuHandler();
+
+// ===== SET MENU HANDLER =====
+
+export function setMenuHandler(handler: MenuHandler) {
+  menuHandler = handler;
+}
+
 // ===== FILE MENU =====
 
 export function getFileMenu(context: MenuContext): MenuItem {
@@ -35,25 +46,25 @@ export function getFileMenu(context: MenuContext): MenuItem {
         label: 'New Blueprint',
         icon: 'file-document-outline',
         shortcut: 'Ctrl+N',
-        action: () => {},
+        action: () => menuHandler.handleNewBlueprint(),
       },
       {
         id: 'file-open',
         label: 'Open',
         icon: 'folder-open-outline',
         shortcut: 'Ctrl+O',
-        action: () => {},
+        action: () => menuHandler.handleOpenBlueprint(),
       },
       {
         id: 'file-open-recent',
         label: 'Open Recent',
         icon: 'history',
         submenu: [
-          { id: 'recent-1', label: 'Blueprint_001.json', action: () => {} },
-          { id: 'recent-2', label: 'Blueprint_002.json', action: () => {} },
-          { id: 'recent-3', label: 'Blueprint_003.json', action: () => {} },
+          { id: 'recent-1', label: 'Blueprint_001.json', action: () => menuHandler.handleOpenBlueprint() },
+          { id: 'recent-2', label: 'Blueprint_002.json', action: () => menuHandler.handleOpenBlueprint() },
+          { id: 'recent-3', label: 'Blueprint_003.json', action: () => menuHandler.handleOpenBlueprint() },
           { divider: true },
-          { id: 'recent-clear', label: 'Clear Recent', action: () => {} },
+          { id: 'recent-clear', label: 'Clear Recent', action: () => console.log('Clear recent files') },
         ],
       },
       { divider: true },
@@ -62,14 +73,14 @@ export function getFileMenu(context: MenuContext): MenuItem {
         label: 'Save',
         icon: 'content-save-outline',
         shortcut: 'Ctrl+S',
-        action: () => {},
+        action: () => menuHandler.handleSaveBlueprint(),
       },
       {
         id: 'file-save-as',
         label: 'Save As...',
         icon: 'content-save-edit-outline',
         shortcut: 'Ctrl+Shift+S',
-        action: () => {},
+        action: () => menuHandler.handleSaveAsBlueprint(),
       },
       { divider: true },
       {
@@ -77,9 +88,9 @@ export function getFileMenu(context: MenuContext): MenuItem {
         label: 'Import',
         icon: 'download-outline',
         submenu: [
-          { id: 'import-json', label: 'From JSON', action: () => {} },
-          { id: 'import-csv', label: 'From CSV', action: () => {} },
-          { id: 'import-yaml', label: 'From YAML', action: () => {} },
+          { id: 'import-json', label: 'From JSON', action: () => menuHandler.handleImportBlueprint() },
+          { id: 'import-csv', label: 'From CSV', action: () => menuHandler.handleImportBlueprint() },
+          { id: 'import-yaml', label: 'From YAML', action: () => menuHandler.handleImportBlueprint() },
         ],
       },
       {
@@ -87,10 +98,10 @@ export function getFileMenu(context: MenuContext): MenuItem {
         label: 'Export',
         icon: 'upload-outline',
         submenu: [
-          { id: 'export-json', label: 'As JSON', action: () => {} },
-          { id: 'export-csv', label: 'As CSV', action: () => {} },
-          { id: 'export-svg', label: 'As SVG', action: () => {} },
-          { id: 'export-yaml', label: 'As YAML', action: () => {} },
+          { id: 'export-json', label: 'As JSON', action: () => menuHandler.handleExportBlueprint() },
+          { id: 'export-csv', label: 'As CSV', action: () => menuHandler.handleExportBlueprint() },
+          { id: 'export-svg', label: 'As SVG', action: () => menuHandler.handleExportBlueprint() },
+          { id: 'export-yaml', label: 'As YAML', action: () => menuHandler.handleExportBlueprint() },
         ],
       },
       { divider: true },
@@ -99,7 +110,7 @@ export function getFileMenu(context: MenuContext): MenuItem {
         label: 'Exit',
         icon: 'exit-to-app',
         shortcut: 'Ctrl+Q',
-        action: () => {},
+        action: () => console.log('Exit application'),
       },
     ],
   };
@@ -118,7 +129,7 @@ export function getEditMenu(context: MenuContext): MenuItem {
         icon: 'undo',
         shortcut: 'Ctrl+Z',
         enabled: context.canUndo,
-        action: () => {},
+        action: () => menuHandler.handleUndo(),
       },
       {
         id: 'edit-redo',
@@ -126,7 +137,7 @@ export function getEditMenu(context: MenuContext): MenuItem {
         icon: 'redo',
         shortcut: 'Ctrl+Y',
         enabled: context.canRedo,
-        action: () => {},
+        action: () => menuHandler.handleRedo(),
       },
       { divider: true },
       {
@@ -135,7 +146,7 @@ export function getEditMenu(context: MenuContext): MenuItem {
         icon: 'content-cut',
         shortcut: 'Ctrl+X',
         enabled: context.hasSelection,
-        action: () => {},
+        action: () => menuHandler.handleCut(),
       },
       {
         id: 'edit-copy',
@@ -143,7 +154,7 @@ export function getEditMenu(context: MenuContext): MenuItem {
         icon: 'content-copy',
         shortcut: 'Ctrl+C',
         enabled: context.hasSelection,
-        action: () => {},
+        action: () => menuHandler.handleCopy(),
       },
       {
         id: 'edit-paste',
@@ -151,7 +162,7 @@ export function getEditMenu(context: MenuContext): MenuItem {
         icon: 'content-paste',
         shortcut: 'Ctrl+V',
         enabled: context.clipboardHasContent,
-        action: () => {},
+        action: () => menuHandler.handlePaste(),
       },
       { divider: true },
       {
@@ -160,7 +171,7 @@ export function getEditMenu(context: MenuContext): MenuItem {
         icon: 'content-duplicate',
         shortcut: 'Ctrl+D',
         enabled: context.hasSelection,
-        action: () => {},
+        action: () => menuHandler.handleDuplicate(),
       },
       {
         id: 'edit-delete',
@@ -168,7 +179,7 @@ export function getEditMenu(context: MenuContext): MenuItem {
         icon: 'delete-outline',
         shortcut: 'Delete',
         enabled: context.hasSelection,
-        action: () => {},
+        action: () => menuHandler.handleDelete(),
       },
       { divider: true },
       {
@@ -176,14 +187,14 @@ export function getEditMenu(context: MenuContext): MenuItem {
         label: 'Select All',
         icon: 'select-all',
         shortcut: 'Ctrl+A',
-        action: () => {},
+        action: () => menuHandler.handleSelectAll(),
       },
       {
         id: 'edit-deselect-all',
         label: 'Deselect All',
         icon: 'select-off',
         shortcut: 'Escape',
-        action: () => {},
+        action: () => menuHandler.handleDeselectAll(),
       },
     ],
   };
@@ -201,72 +212,72 @@ export function getViewMenu(context: MenuContext): MenuItem {
         label: 'Zoom In',
         icon: 'magnify-plus-outline',
         shortcut: 'Ctrl+Plus',
-        action: () => {},
+        action: () => menuHandler.handleZoomIn(),
       },
       {
         id: 'view-zoom-out',
         label: 'Zoom Out',
         icon: 'magnify-minus-outline',
         shortcut: 'Ctrl+Minus',
-        action: () => {},
+        action: () => menuHandler.handleZoomOut(),
       },
       {
         id: 'view-zoom-reset',
         label: 'Reset Zoom',
         icon: 'magnify',
         shortcut: 'Ctrl+0',
-        action: () => {},
+        action: () => menuHandler.handleZoomReset(),
       },
       {
         id: 'view-fit-screen',
         label: 'Fit to Screen',
         icon: 'fit-to-screen',
         shortcut: 'Ctrl+Shift+F',
-        action: () => {},
+        action: () => menuHandler.handleZoomFit(),
       },
       { divider: true },
       {
         id: 'view-pan-up',
         label: 'Pan Up',
         icon: 'arrow-up-thick',
-        action: () => {},
+        action: () => console.log('Pan up'),
       },
       {
         id: 'view-pan-down',
         label: 'Pan Down',
         icon: 'arrow-down-thick',
-        action: () => {},
+        action: () => console.log('Pan down'),
       },
       {
         id: 'view-pan-left',
         label: 'Pan Left',
         icon: 'arrow-left-thick',
-        action: () => {},
+        action: () => console.log('Pan left'),
       },
       {
         id: 'view-pan-right',
         label: 'Pan Right',
         icon: 'arrow-right-thick',
-        action: () => {},
+        action: () => console.log('Pan right'),
       },
       { divider: true },
       {
         id: 'view-grid',
         label: 'Show Grid',
         icon: 'grid',
-        action: () => {},
+        action: () => menuHandler.handleToggleGrid(),
       },
       {
         id: 'view-minimap',
         label: 'Show Minimap',
         icon: 'map-outline',
-        action: () => {},
+        action: () => console.log('Toggle minimap'),
       },
       {
         id: 'view-inspector',
         label: 'Show Inspector',
         icon: 'information-outline',
-        action: () => {},
+        action: () => console.log('Toggle inspector'),
       },
     ],
   };
@@ -388,20 +399,20 @@ export function getToolsMenu(context: MenuContext): MenuItem {
         id: 'tools-validate',
         label: 'Validate Graph',
         icon: 'check-circle-outline',
-        action: () => {},
+        action: () => menuHandler.handleValidate(),
       },
       {
         id: 'tools-execute',
         label: 'Execute',
         icon: 'play-outline',
         shortcut: 'F5',
-        action: () => {},
+        action: () => menuHandler.handleExecute(),
       },
       {
         id: 'tools-debug',
         label: 'Debug',
         icon: 'bug-outline',
-        action: () => {},
+        action: () => menuHandler.handleDebugMode(),
       },
       { divider: true },
       {
@@ -409,14 +420,14 @@ export function getToolsMenu(context: MenuContext): MenuItem {
         label: 'Search',
         icon: 'magnify',
         shortcut: 'Ctrl+F',
-        action: () => {},
+        action: () => console.log('Open search'),
       },
       {
         id: 'tools-find-replace',
         label: 'Find & Replace',
         icon: 'find-replace',
         shortcut: 'Ctrl+H',
-        action: () => {},
+        action: () => console.log('Open find & replace'),
       },
       { divider: true },
       {
@@ -424,11 +435,11 @@ export function getToolsMenu(context: MenuContext): MenuItem {
         label: 'Layout',
         icon: 'call-split',
         submenu: [
-          { id: 'layout-hierarchical', label: 'Hierarchical', action: () => {} },
-          { id: 'layout-circular', label: 'Circular', action: () => {} },
-          { id: 'layout-grid', label: 'Grid', action: () => {} },
-          { id: 'layout-force', label: 'Force-Directed', action: () => {} },
-          { id: 'layout-tree', label: 'Tree', action: () => {} },
+          { id: 'layout-hierarchical', label: 'Hierarchical', action: () => console.log('Apply hierarchical layout') },
+          { id: 'layout-circular', label: 'Circular', action: () => console.log('Apply circular layout') },
+          { id: 'layout-grid', label: 'Grid', action: () => console.log('Apply grid layout') },
+          { id: 'layout-force', label: 'Force-Directed', action: () => console.log('Apply force layout') },
+          { id: 'layout-tree', label: 'Tree', action: () => console.log('Apply tree layout') },
         ],
       },
       {
@@ -436,24 +447,24 @@ export function getToolsMenu(context: MenuContext): MenuItem {
         label: 'Connection Presets',
         icon: 'link-variant',
         submenu: [
-          { id: 'connect-chain', label: 'Chain', action: () => {} },
-          { id: 'connect-star', label: 'Star', action: () => {} },
-          { id: 'connect-mesh', label: 'Mesh', action: () => {} },
-          { id: 'connect-bipartite', label: 'Bipartite', action: () => {} },
+          { id: 'connect-chain', label: 'Chain', action: () => console.log('Apply chain preset') },
+          { id: 'connect-star', label: 'Star', action: () => console.log('Apply star preset') },
+          { id: 'connect-mesh', label: 'Mesh', action: () => console.log('Apply mesh preset') },
+          { id: 'connect-bipartite', label: 'Bipartite', action: () => console.log('Apply bipartite preset') },
         ],
       },
       {
         id: 'tools-batch-ops',
         label: 'Batch Operations',
         icon: 'folder-multiple-outline',
-        action: () => {},
+        action: () => console.log('Open batch operations'),
       },
       { divider: true },
       {
         id: 'tools-settings',
         label: 'Settings',
         icon: 'cog-outline',
-        action: () => {},
+        action: () => console.log('Open settings'),
       },
     ],
   };
