@@ -7,6 +7,8 @@
 #include <cctype>
 #include <cstdlib>
 #include <algorithm>
+#include <fstream>
+#include <cstdio>
 
 #include "qvector.h"
 #include "qmap.h"

@@ -15,14 +15,16 @@ void Game_Screen::initialize() {
 void Game_Screen::update() {
 }
 
-void Game_Screen::brightness() const {
+int Game_Screen::brightness() const {
+    return _brightness;
 }
 
 void Game_Screen::setBrightness(int brightness) {
     _brightness = qBound(0, brightness, 255);
 }
 
-void Game_Screen::tone() const {
+int Game_Screen::tone() const {
+    return 0;
 }
 
 void Game_Screen::setTone(int r, int g, int b, int gray, int duration) {
@@ -57,14 +59,16 @@ void Game_Screen::tintPicture(int pictureId, int r, int g, int b, int gray, int 
 void Game_Screen::erasePicture(int pictureId) {
 }
 
-void Game_Screen::weatherPower() const {
+int Game_Screen::weatherPower() const {
+    return _weatherPower;
 }
 
 void Game_Screen::setWeatherPower(int power) {
     _weatherPower = qBound(0, power, 9);
 }
 
-void Game_Screen::weather() const {
+int Game_Screen::weather() const {
+    return 0;
 }
 
 void Game_Screen::changeWeather(const QString &type, int power, int duration) {

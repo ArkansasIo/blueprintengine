@@ -80,6 +80,8 @@ public:
     iterator end() { return iterator(_data.end()); }
     const_iterator begin() const { return const_iterator(_data.begin()); }
     const_iterator end() const { return const_iterator(_data.end()); }
+    const_iterator constBegin() const { return const_iterator(_data.cbegin()); }
+    const_iterator constEnd() const { return const_iterator(_data.cend()); }
 
 private:
     std::map<K, V> _data;

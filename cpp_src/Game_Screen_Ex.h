@@ -8,9 +8,9 @@ public:
 
     void initialize();
     void update();
-    void brightness() const;
+    int brightness() const;
     void setBrightness(int brightness);
-    void tone() const;
+    int tone() const;
     void setTone(int r, int g, int b, int gray = 0, int duration = 0);
     void startTint(int r, int g, int b, int gray, int duration);
     void flash(int red, int green, int blue, int duration);
@@ -23,9 +23,9 @@ public:
     void rotatePicture(int pictureId, int speed);
     void tintPicture(int pictureId, int r, int g, int b, int gray, int duration);
     void erasePicture(int pictureId);
-    void weatherPower() const;
+    int weatherPower() const;
     void setWeatherPower(int power);
-    void weather() const;
+    int weather() const;
     void changeWeather(const QString &type, int power, int duration);
     
 private:

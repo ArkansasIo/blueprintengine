@@ -57,6 +57,17 @@ public:
     const_iterator end() const { return data.end(); }
     const_iterator cbegin() const { return data.cbegin(); }
     const_iterator cend() const { return data.cend(); }
+    QVector<T> mid(int pos, int len = -1) const {
+        QVector<T> result;
+        if (pos < 0 || pos >= static_cast<int>(data.size())) {
+            return result;
+        }
+        int count = (len < 0) ? (static_cast<int>(data.size()) - pos) : len;
+        for (int i = 0; i < count && pos + i < static_cast<int>(data.size()); ++i) {
+            result.append(data[pos + i]);
+        }
+        return result;
+    }
     QVector<T> toVector() const { return *this; }
     QString join(const QString& delimiter) const;
 };
